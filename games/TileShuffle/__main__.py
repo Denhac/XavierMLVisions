@@ -39,7 +39,7 @@ INFERENCE_INTERVAL = 0.1  # seconds between inferences
 CONFIDENCE_THRESHOLD = 0.6  # minimum confidence to act on detection
 
 # Timing settings
-MENU_TIMEOUT = 10.0  # seconds of no detection before returning to idle
+MENU_TIMEOUT = 5.0  # seconds of no detection before returning to idle
 CONFIRM_DURATION = 2.0  # seconds to hold object before launching
 
 # Object to game mapping
@@ -316,10 +316,10 @@ class SlidingTileAnimation:
                 self.current_slide = 0
 
                 self.slide_steps += random.randint(-2, 5)
-                if self.slide_steps <= 30:
+                if self.slide_steps <= 15:
+                    self.slide_steps = 15
+                elif self.slide_steps >= 30:
                     self.slide_steps = 30
-                elif self.slide_steps >= 60:
-                    self.slide_steps = 60
 
         # Draw static tiles
         for tile in self.tiles:
@@ -495,6 +495,7 @@ class Launcher:
         self.last_inference_time = 0
         self.last_detection_time = 0
         self.confirm_start_time = 0
+        self.background_time = 0
 
         # Current detection
         self.current_detection = None
@@ -550,6 +551,8 @@ class Launcher:
             detected, confidence = self.run_inference()
 
             if detected and confidence >= CONFIDENCE_THRESHOLD:
+                if detected=="background" and detected!=self.current_detection:
+                    self.background_time = now
                 self.current_detection = detected
                 self.current_confidence = confidence
                 self.last_detection_time = now
@@ -567,6 +570,7 @@ class Launcher:
 
         elif self.state == State.MENU:
             # Check for game selection
+            
             if self.current_detection in GAME_MAPPINGS:
                 self.selected_game = self.current_detection
                 self.confirm_start_time = now
@@ -574,10 +578,11 @@ class Launcher:
                 print(f"Selecting: {GAME_MAPPINGS[self.selected_game]['name']}")
 
             # Timeout back to idle
-            elif now - self.last_detection_time >= MENU_TIMEOUT:
-                print("Menu timeout - returning to idle")
-                self.state = State.IDLE
-                self.selected_game = None
+            elif self.current_detection=="background":
+                if now-self.background_time>= MENU_TIMEOUT:
+                    print("Menu timeout - returning to idle")
+                    self.state = State.IDLE
+                    self.selected_game = None
 
         elif self.state == State.CONFIRMING:
             # Check if still holding the same object
