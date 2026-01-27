@@ -47,6 +47,17 @@ cd ~/MLVisions
 git fetch origin && git checkout your-feature
 ```
 
+## Pushing from Xavier
+
+The Xavier has a deploy key with write access to GitHub. Anyone at denhac can commit and push directly from it. Set your identity before committing:
+
+```bash
+git config user.name "Your Name"
+git config user.email "you@example.com"
+git add -A && git commit -m "your message"
+git push origin master
+```
+
 ## Before You Push
 
 Merge master into your branch and make sure nothing is broken:
