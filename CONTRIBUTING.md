@@ -6,6 +6,15 @@ Build a game, add features, fix bugs. Make it yours.
 
 Tile screensaver → hand detected → game selection → object detected → game launches. Your game plugs into this pipeline.
 
+## Current Games
+
+- **TileShuffle** — screensaver / idle display
+- **SimpleHunt** — object hunt using hand detection
+- **DemonQuest** — projection game with animated sequences
+- **TrainClassifier** — educational: visitors train a YOLO classifier live on-device
+
+Games can be interactive, educational, or both.
+
 ## New Game Structure
 
 ```
@@ -26,7 +35,7 @@ games/YourGame/
 
 ## Training Models
 
-You can train your own models on the Xavier's GPU for use in your game. See `games/TrainClassifier/` and `games/TrainTheAI/` for examples of games that train YOLO classifiers on-device.
+You can train your own models on the Xavier's GPU for use in your game. See `games/TrainClassifier/` for an example that trains a YOLO classifier on-device.
 
 ## Testing on Xavier
 
@@ -37,6 +46,20 @@ ssh colin@10.11.3.65
 cd ~/MLVisions
 git fetch origin && git checkout your-feature
 ```
+
+## Before You Push
+
+Merge master into your branch and make sure nothing is broken:
+
+```bash
+git fetch origin
+git merge origin/master
+# resolve any conflicts
+# test that existing games still run
+git push
+```
+
+Do this before opening a PR. If master has changed since you branched, your PR should already include those changes.
 
 ## Rules
 

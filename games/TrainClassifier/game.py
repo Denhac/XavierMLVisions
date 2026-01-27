@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Train Classifier - Educational ML Experience with REAL Training
+Train The AI - Educational ML Experience with REAL Training
 
 A 3-phase interactive experience that teaches machine learning concepts
 using ACTUAL model training, not simulation.
@@ -60,7 +60,7 @@ TEMP_DATASET_DIR = GAME_DIR / "temp_training"
 # Educational content shown during training (technical and accurate)
 TRAINING_FACTS = [
     # Architecture facts
-    "YOLOv8n-cls: A convolutional neural network with 2.7M parameters",
+    "YOLOv8n-cls: A convolutional neural network with 3M parameters",
     "Input: 224x224x3 tensor (224px image, RGB channels)",
     "Conv layers extract features: edges -> textures -> shapes -> objects",
     "Final layer: 1280 features compressed to 2 classes (yours + background)",
@@ -73,7 +73,7 @@ TRAINING_FACTS = [
     # Transfer learning
     "Transfer learning: starting from ImageNet-pretrained weights",
     "Pretrained on 1.2M images across 1000 categories",
-    "All 2.7M weights update, but early layers change minimally",
+    "All 3M weights update, but early layers change minimally",
     "Final classifier layer adapts most to YOUR specific object",
 ]
 
@@ -93,7 +93,7 @@ EDUCATION_SLIDES = [
     {
         "title": "What are Weights?",
         "content": [
-            "YOLOv8n-cls has ~2.7 million trainable parameters",
+            "YOLOv8n-cls has ~3 million trainable parameters",
             "",
             "Example weight matrix (simplified):",
             "  [[0.12, -0.34, 0.56, ...],",
@@ -394,7 +394,7 @@ def draw_title_screen(frame, state: GameState):
     draw_centered_text(frame, "2. Fine-tune YOLOv8n-cls", h // 2 + 35, 0.6, (150, 150, 255), 2)
     draw_centered_text(frame, "3. Test YOUR trained model!", h // 2 + 65, 0.6, (255, 150, 150), 2)
 
-    draw_centered_text(frame, "YOLOv8n-cls: 2.7M parameters", h - 110, 0.45, (150, 150, 150), 1)
+    draw_centered_text(frame, "YOLOv8n-cls: 3M parameters", h - 110, 0.45, (150, 150, 150), 1)
     draw_centered_text(frame, "Press SPACE to begin", h - 70, 0.9, (100, 255, 100), 2)
 
 
@@ -738,7 +738,7 @@ def draw_game_over(frame, state: GameState):
     matrix_y = h // 3 + 30
     draw_text_with_bg(frame, "Weight matrix (illustration):", (30, matrix_y), 0.5, (200, 200, 200), 1)
 
-    # Illustrative weights - actual model has 2.7M of these
+    # Illustrative weights - actual model has 3M of these
     np.random.seed(int(state.training_accuracy * 1000))
     weights = np.random.randn(4, 6) * 0.5
 
@@ -765,7 +765,7 @@ def draw_game_over(frame, state: GameState):
         f"- {len(state.captured_frames)} object images",
         f"- {len(state.background_frames)} background images",
         f"- {TRAIN_EPOCHS} epochs of training",
-        "- 2.7M weights adjusted",
+        "- 3M weights adjusted",
         "- Cross-entropy loss minimized",
     ]
     for i, s in enumerate(summaries):
